@@ -1,0 +1,7 @@
+useDynLib(ltbayes)
+import(mcmc,MHadaptive,numDeriv)
+export(fmodel1pl,fmodel2pl,fmodel3pl,fmodel4pl,
+	fmodel1pp,fmodel2pp,fmodel3pp,fmodel4pp,
+	fmodelgrl,fmodelgrp,
+	fmodelnrm,fmodelpcm,fmodelrsm,fmodelseq,
+	information,patterns,postsamp,postmode,posttrace,profileci)
