@@ -1,7 +1,8 @@
 subroutine fmodel4pl(zeta, y, m, s, apar, bpar, cpar, dpar, loglik, prob)
 implicit none				
 integer, parameter :: dp = kind(1.0d0)	
-integer, intent(in) :: m, s, y(s,m)   
+integer, intent(in) :: m, s
+integer, intent(in) :: y(s,m)   
 real(dp), intent(in) :: zeta, apar(m), bpar(m), cpar(m), dpar(m)											
 real(dp), intent(out) :: loglik, prob(m,2) 
 integer :: i, j

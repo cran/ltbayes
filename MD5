@@ -1,4 +1,4 @@
-8c6e49cc3ce1d9731a108aca44fc5708 *DESCRIPTION
+40b6b96fa965833069d6472990a254e3 *DESCRIPTION
 5c4534ed2c897d8d1bfd45b77bfb9171 *NAMESPACE
 709d2fc5c00046c5d3bc4d1e1eacffb2 *R/fmodel1pl.R
 45ec742341d84f3a262366f6b20b540d *R/fmodel1pp.R
@@ -25,7 +25,7 @@ ca1ccadf1424f132634ed874f06ab2b7 *man/fmodel1pl.Rd
 8b8dcc6bdf05d113914235c6912e18e0 *man/fmodel2pl.Rd
 b82775a7decdc1e3dc777b46fbb8fdfe *man/fmodel2pp.Rd
 d78b2c1a7b990ae788363f88d6818551 *man/fmodel3pl.Rd
-a3e4daa7b50d7074b77feeb605b25ee5 *man/fmodel3pp.Rd
+7253478a3bfbe6bc9c78b5af02fff18a *man/fmodel3pp.Rd
 7f7a74864ccede7a3fa88fd141a63f54 *man/fmodel4pl.Rd
 6e02353cc9f0450c98289429cfbc97d7 *man/fmodel4pp.Rd
 d4d31fc976f5d191dd56d36f54c8ebd1 *man/fmodelgrl.Rd
@@ -40,11 +40,11 @@ c80b4b6488e21236e02f0b95e906b69a *man/patterns.Rd
 f44bcc12e77c887101f1ae6afa1f1ddc *man/postsamp.Rd
 0d3f73651ecaec2357d591915f5a11cc *man/posttrace.Rd
 15275e173691c66fc99da94bc3ccf7aa *man/profileci.Rd
-50c2d500254d70b4c29fb017094ce86b *src/fmodel4pl.f90
-89ec137dfb8a0db5c0878c8101de30ef *src/fmodel4pp.f95
-3352291a81e1805d08c6fbadd4ba8745 *src/fmodelgrl.f90
-383b006b25e0bda924b5a84bc0540997 *src/fmodelgrp.f95
-d50bfd4d5629bcf04aa26d3ad72254be *src/fmodelnrm.f90
-68642e52112febb8e5ce51ec8297af39 *src/fmodelpcm.f90
-99df8fbd1c5a9c63e5fb3a603cc8dbce *src/fmodelrsm.f90
-197814dcb5dc3e274d1f7aecdd50bedb *src/fmodelseq.f90
+b36d9885e6a1a5f30b99c7ef540c2774 *src/fmodel4pl.f90
+93c0bed233a45b028663134a417485d1 *src/fmodel4pp.f95
+6032923541a253bbe14813dae23a5cbe *src/fmodelgrl.f90
+e2bc4af0592376369afcf0f6beeb7431 *src/fmodelgrp.f95
+ccc201fa39ff2cbb3e7ebf4eaa8bf2af *src/fmodelnrm.f90
+3959b01eedc65e0cb03ee61391a2bc98 *src/fmodelpcm.f90
+f2e7b41430dab7944e1ad1a630444dff *src/fmodelrsm.f90
+b61875182c6b1528a294b35d27891382 *src/fmodelseq.f90

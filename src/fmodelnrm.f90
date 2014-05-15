@@ -2,7 +2,8 @@ subroutine fmodelnrm(zeta, y, m, r, s, apar, bpar, loglik, prob)
 implicit none
 integer, parameter :: dp = kind(1.0d0)
 real(dp), intent(in) :: zeta
-integer, intent(in) :: y(s,m), m, r, s
+integer, intent(in) :: m, r, s
+integer, intent(in) :: y(s,m)
 real(dp), intent(in) :: apar(m,r), bpar(m,r)
 real(dp), intent(out) :: loglik, prob(m,r)
 integer :: i, j, k

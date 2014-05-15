@@ -1,13 +1,15 @@
 subroutine fmodelgrp(zeta, y, m, r, s, apar, bpar, loglik, prob)
 implicit none
 integer, parameter :: dp = kind(1.0d0)
-real(dp), parameter :: sqrt2 = sqrt(2.0_dp)
+real(dp) :: sqrt2
+integer, intent(in) :: m, r, s
 real(dp), intent(in) :: zeta, apar(m), bpar(m,r-1)
 real(dp), intent(out) :: loglik, prob(m,r)
 real(dp) :: z(s,m)
 integer, intent(in) :: y(s,m)
-integer, intent(in) :: m, r, s
 integer :: i, j, k
+
+sqrt2 = sqrt(2.0_dp)
 
 do j = 1, m
 	prob(j,1) = 1 - (1 + erf(apar(j)*(zeta - bpar(j,1))/sqrt2))/2

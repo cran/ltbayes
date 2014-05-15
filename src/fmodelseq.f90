@@ -1,7 +1,8 @@
 subroutine fmodelseq(zeta, y, m, r, s, bpar, loglik, prob)
 implicit none
 integer, parameter :: dp = kind(1.0d0)
-integer, intent(in) :: y(s,m), m, r, s
+integer, intent(in) :: m, r, s
+integer, intent(in) :: y(s,m)
 integer :: i, j, k
 real(dp), intent(in) :: zeta, bpar(m,r-1)
 real(dp), intent(out) :: loglik, prob(m,r)

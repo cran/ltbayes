@@ -33,7 +33,7 @@ Additional arguments to be passed to \code{prior}.
 }
 }
 \details{
-The item response model is parameterized as \deqn{P(Y_{ij} = 1|zeta_i) = \gamma_j + (1 - \gamma_j) \Phi(-\alpha_j(\zeta_i - \beta_j)),} where \eqn{\Phi} is the distribution function of a standard normal distribution, \eqn{\alpha_j} is the discrimination parameter (\code{apar}), \eqn{\beta_j} is the difficulty parameter (\code{bpar}), \eqn{0 \le \gamma_j < 1} is the lower asymptote parameter (\code{cpar}), and \eqn{\zeta_i} is the latent trait (\code{zeta}).
+The item response model is parameterized as \deqn{P(Y_{ij} = 1|\zeta_i) = \gamma_j + (1 - \gamma_j) \Phi(-\alpha_j(\zeta_i - \beta_j)),} where \eqn{\Phi} is the distribution function of a standard normal distribution, \eqn{\alpha_j} is the discrimination parameter (\code{apar}), \eqn{\beta_j} is the difficulty parameter (\code{bpar}), \eqn{0 \le \gamma_j < 1} is the lower asymptote parameter (\code{cpar}), and \eqn{\zeta_i} is the latent trait (\code{zeta}).
 }
 \value{
 \item{post }{The log of the unnormalized posterior distribution evaluated at \code{zeta}.}

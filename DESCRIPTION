@@ -2,8 +2,8 @@ Package: ltbayes
 Type: Package
 Title: Simulation-Based Bayesian Inference for Latent Traits of Item
         Response Models
-Version: 0.1
-Date: 2014-05-06
+Version: 0.2
+Date: 2014-05-15
 Author: Timothy R. Johnson
 Maintainer: Timothy R. Johnson <trjohns@uidaho.edu>
 Description: Functions for simulating realizations from the posterior distribution of
@@ -16,7 +16,7 @@ Depends: R (>= 3.0.3), mcmc (>= 0.9-2), MHadaptive (>= 1.1-8), numDeriv
         (>= 2012.9-1)
 Suggests: coda, mcmcplots, ggmcmc
 License: GPL (>= 2)
-Packaged: 2014-05-14 18:24:40 UTC; trjohns
+Packaged: 2014-05-15 16:28:45 UTC; trjohns
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2014-05-14 20:36:48
+Date/Publication: 2014-05-15 18:37:36
