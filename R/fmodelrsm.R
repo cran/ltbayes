@@ -10,5 +10,5 @@ function(zeta, y, cpar, dpar, prior = dnorm, ...) {
     m = as.integer(m), r = as.integer(r), s = as.integer(nrow(y)), 
     cpar = as.double(cpar), dpar = as.double(dpar), 
   	loglik = as.double(0), prob = prob)
-  return(list(prob = tmp$loglik + log(prior(zeta, ...)), prob = tmp$prob))
+  return(list(post = tmp$loglik + log(prior(zeta, ...)), prob = tmp$prob))
 }

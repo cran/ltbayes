@@ -46,6 +46,31 @@ Timothy R. Johnson
 When estimating the item parameters, constraints on \eqn{\alpha_{jk}} and \eqn{\beta_{jk}} are necessary for identification, such as \eqn{\alpha_{j0} = 0} and \eqn{\beta_{j0} = 0}, but these are not reflected here since a variety of constraints can be used.
 }
 \examples{
-fmodelnrm(0, c(0,1,2,1,0), apar = matrix(1, 5, 3), bpar = matrix(0, 5, 3))
+samp <- 5000 # samples from posterior distribution
+burn <- 1000 # burn-in samples to discard
+
+alph <- matrix(c(-1, 0, 1), 5, 3, byrow = TRUE)
+beta <- matrix(0, 5, 3)
+
+post <- postsamp(fmodelnrm, c(0,1,2,1,0), 
+	apar = alph, bpar = beta, control = list(nbatch = samp + burn))
+
+post <- data.frame(sample = 1:samp, 
+	zeta = post$batch[(burn + 1):(samp + burn)])
+	
+with(post, plot(sample, zeta), type = "l")  # trace plot of sampled realizations
+with(post, plot(density(zeta, adjust = 2))) # density estimate of posterior distribution
+
+with(posttrace(fmodelnrm, c(0,1,2,1,0), apar = alph, bpar = beta),
+	plot(zeta, post, type = "l")) # profile of log-posterior density
+
+information(fmodelnrm, c(0,1,2,1,0), apar = alph, bpar = beta) # Fisher information
+
+with(post, mean(zeta)) # posterior mean
+postmode(fmodelnrm, c(0,1,2,1,0), apar = alph, bpar = beta) # posterior mode
+
+with(post, quantile(zeta, probs = c(0.025, 0.975))) # posterior credibility interval
+profileci(fmodelnrm, c(0,1,2,1,0), 
+   apar = alph, bpar = beta) # profile likelihood confidence interval
 }
 

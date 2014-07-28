@@ -1,0 +1,114 @@
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{User-Defined Models}
+-->
+
+# User-Defined Models
+
+The **ltbayes** package includes functions for the posterior distribution of the latent trait of several common item response models. But an advantage of the package is that its utility functions can also easily be used with custom user-specified functions for other models not included with the package. This vignette gives two examples that illustrate how to specify custom item response models to work with **ltbayes**.
+
+## Three-Parameter Logistic Binary Model
+
+The functions included with **ltbayes** use Fortran 90/95 subroutines for computationally efficiency, but here for illustration we will consider an alternative to `fmodel3pl` (the three-parameter logistic binary item response model) using only R. Recall that this model is 
+$$
+	P(Y_{ij} = y|\zeta_i,\alpha_j,\beta_j,\gamma_j) = \gamma_j + \frac{(1-\gamma_j)\exp[y\alpha_j(\zeta_i - \beta_j)]}{1 + \exp[\alpha_j(\zeta_i - \beta_j)]},
+$$
+for $y = 0,1$. To implement this model a R function is necessary that it accept as arguments $\zeta$, one or more response patterns, the item parameters ($\alpha_j$, $\beta_j$, $\gamma_j$), and also allows specification of a prior distribution for $\zeta$. This R function could be specified as follows.
+```{r custom3pl}
+custom3pl <- function(zeta, y, alph, beta, gamm, prior = dnorm, ...) {
+	if (is.vector(y)) y <- matrix(y, 1, length(y))
+	m <- ncol(y)
+	n <- nrow(y)
+	prob <- matrix(NA, m, 2)
+	prob[,2] <- gamm + (1 - gamm) * plogis(alph * (zeta - beta))
+	prob[,1] <- 1 - prob[,2]
+	yprb <- matrix(NA, n, m)
+	for (i in 1:n) {
+		yprb[i,] <- prob[row(prob) == 1:m & col(prob) == y[i,] + 1]
+	}
+	return(list(post = log(sum(apply(yprb, 1, prod))) 
+		+ log(prior(zeta, ...)), prob = prob))
+}
+```
+Strictly speaking only the arguments for $\zeta$ and the response pattern(s) are necessary, since the item parameters and prior can be specified as constants within the function, but making them arguments makes the function more flexible. The first argument *must* be $\zeta$, but the remaining arguments can be specified in any order. Also the function must return a named list of the log of the posterior distribution (up to a constant of proportionality or an additive constant on the log scale) and the item category response probabilities, although the latter is only necessary for use with the `information` function. Like the functions included with the **ltbayes** package a standard normal prior distribution is assumed by default, but can be specified as a different distribution and with additional arguments passed directly to `custom3pl`. Adept R pogrammers may notice ways to make this function more efficient, and like the functions included with the **ltbayes** package greater efficiency can be achieved by using compiled C or Fortran subroutines for the computations, particularly in the case of conditioning on sum scores. However in many cases such gains in efficiency may not be important. It is worth noting though that if conditioning will only be done with respect to respose patterns and not sum scores the function can be simplified to
+```{r, eval = FALSE}
+custom3pl <- function(zeta, y, alph, beta, prior = dnorm, ...) {
+	prob <- gamm + (1 - gamm) * plogis(alph * (zeta - beta))
+	yprb <- prob^y * (1 - prb)^(1 - y)
+	return(list(post = log(prob(yprb)) 
+		+ log(prior(zeta, ...)), prob = prob))
+}	
+```
+Now we can test \texttt{custom3pl} against \texttt{fmodel3pl}.
+```{r, echo = FALSE, message = FALSE}
+library(ltbayes) 
+```
+```{r fmodel3pldemo}
+samp <- 5000 # number of sampled realizations from posterior distribution
+burn <- 1000 # number of discarded burn-in samples
+alph <- c(1.27,1.34,1.14,1,0.67)   # discrimination parameters
+beta <- c(1.19,0.59,0.15,-0.59,-2) # difficulty parameters
+gamm <- c(0.1,0.15,0.15,0.2,0.1)   # guessing parameters
+set.seed(123)
+zeta.fmodel3pl <- postsamp(fmodel3pl, c(0,0,1,1,1), 
+	apar = alph, bpar = beta, cpar = gamm,
+	control = list(nbatch = samp + burn, scale = 3))
+zeta.fmodel3pl <- data.frame(sample = 1:samp, 
+	zeta = zeta.fmodel3pl$batch[(burn + 1):(samp + burn)])
+head(zeta.fmodel3pl)
+set.seed(123)
+zeta.custom3pl <- postsamp(fmodel3pl, c(0,0,1,1,1), 
+	apar = alph, bpar = beta, cpar = gamm,
+	control = list(nbatch = samp + burn, scale = 3))
+zeta.custom3pl <- data.frame(sample = 1:samp, 
+	zeta = zeta.custom3pl$batch[(burn + 1):(samp + burn)])
+head(zeta.custom3pl)
+```
+Note that both functions produce the same results. 
+
+## Generalized Partial Credit Model
+
+The partial credit and rating scale models are special cases of the generalized partial credit model (Muraki, 1992). This model is defined as
+$$
+	P(Y_j = y|\zeta,\alpha_j,\beta_{jk}) \propto \exp\left(\sum_{k=0}^y \alpha_j(\zeta - \beta_{jk})\right)
+$$
+for $y = 0, 1, \dots, r-1$ where $\beta_{j0} = 0$. A function for evaluating the posterior distribution of $\zeta$ for the generalized partial credit model is not included with **ltbayes**, but one can be specified relatively easily as shown below. 
+```{r, gpc}
+fmodelgpc <- function(zeta, y, apar, bpar, prior = dnorm, ...) {
+	if (is.vector(y)) y <- matrix(y, 1, length(y))
+	m <- ncol(y)
+	n <- nrow(y)
+	r <- ncol(beta) + 1
+	prob <- exp(outer(apar*zeta, 0:(r-1)) - 
+		t(apply(sweep(cbind(0, bpar), 1, apar, "*"), 1, cumsum)))
+	prob <- sweep(prob, 1, apply(prob, 1, sum), "/")	
+	yprb <- matrix(NA, n, m)
+	for (i in 1:n) {
+		yprb[i,] <- prob[row(prob) == 1:m & col(prob) == y[i,] + 1]
+	}
+	return(list(post = log(sum(apply(yprb, 1, prod)))
+		+ log(prior(zeta, ...)), prob = prob))
+}
+```
+To check the function we can compare it against `fmodelpcm` since the partial credit model is a special case where all $\alpha_j = 1$. 
+```{r gpcdemo}
+alph <- rep(1, 5)        # "discrimination" parameters
+beta <- matrix(0, 5, 2)  # "difficulty" parameters
+set.seed(123)
+zeta.fmodelpcm <- postsamp(fmodelpcm, c(0,1,2,1,0), bpar = beta,
+	control = list(nbatch = samp + burn))
+zeta.fmodelpcm <- data.frame(sample = 1:samp, 
+	zeta = zeta.fmodelpcm$batch[(burn + 1):(samp + burn)])
+head(zeta.fmodelpcm)
+set.seed(123)
+zeta.fmodelgpc <- postsamp(fmodelgpc, c(0,1,2,1,0), apar = alph, bpar = beta,
+	control = list(nbatch = samp + burn))
+zeta.fmodelgpc <- data.frame(sample = 1:samp, 
+	zeta = zeta.fmodelgpc$batch[(burn + 1):(samp + burn)])
+head(zeta.fmodelgpc)
+```
+As expected, both functions give the same results, but `fmodelgpc` could be used for cases where the items do not have equal discrimination parameters.
+
+# References
+
+Muraki, E. (1992). A generalized partial credit model: Application of an EM algorithm. *Applied Psychological Measurement*, *16*, 159-176.

@@ -51,14 +51,41 @@ Timothy R. Johnson
 \note{
 This function is designed to be called by other functions in the \pkg{ltbayes} package, but could be useful on its own.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
 See \code{\link{fmodel1pl}}, \code{\link{fmodel2pl}}, and \code{\link{fmodel3pl}} for related models, and \code{\link{fmodel4pp}} for a probit variant of this model.
 }
 \examples{
-fmodel4pl(0, c(0,0,1,1,1), apar = rep(1, 5), 
-   bpar = rep(0, 5), cpar = rep(0.2, 5), dpar = rep(0.8, 5))
+samp <- 5000 # samples from posterior distribution
+burn <- 1000 # burn-in samples to discard
+
+alph <- rep(1, 5)   # discrimination parameters
+beta <- -2:2        # difficulty parameters
+gamm <- rep(0.1, 5) # lower asymptote parameters
+delt <- rep(0.9, 5)	# upper asymptote parameters
+
+post <- postsamp(fmodel4pl, c(1,1,0,0,0), 
+	apar = alph, bpar = beta, cpar = gamm, dpar = delt,
+	control = list(nbatch = samp + burn))
+
+post <- data.frame(sample = 1:samp, 
+	zeta = post$batch[(burn + 1):(samp + burn)])
+	
+with(post, plot(sample, zeta), type = "l")  # trace plot of sampled realizations
+with(post, plot(density(zeta, adjust = 2))) # density estimate of posterior distribution
+
+with(posttrace(fmodel4pl, c(1,1,0,0,0), 
+	apar = alph, bpar = beta, cpar = gamm, dpar = delt),
+	plot(zeta, post, type = "l")) # profile of log-posterior density
+
+information(fmodel4pl, c(1,1,0,0,0), 
+	apar = alph, bpar = beta, cpar = gamm, dpar = delt) # Fisher information
+
+with(post, mean(zeta)) # posterior mean
+postmode(fmodel4pl, c(1,1,0,0,0), 
+	apar = alph, bpar = beta, cpar = gamm, dpar = delt) # posterior mode
+
+with(post, quantile(zeta, probs = c(0.025, 0.975))) # posterior credibility interval
+profileci(fmodel4pl, c(1,1,0,0,0), apar = alph, 
+	bpar = beta, cpar = gamm, dpar = delt) # profile likelihood confidence interval
 }
 

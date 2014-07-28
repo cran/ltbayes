@@ -49,7 +49,7 @@ zeta <- postsamp(fmodelpcm, c(0,1,2,1,0), bpar = matrix(0, 5, 2),
 plot(zeta$batch, type = "l") # trace plot
 
 # simulating 10000 realizations from the posterior distribution from
-# a partial credit model using a non-adaptive Metropolis algorithm
+# a partial credit model using an adaptive Metropolis algorithm
 zeta <- postsamp(fmodelpcm, c(0,1,2,1,0), bpar = matrix(0, 5, 2),
    control = list(iterations = 10000), method = 'adapt')
 plot(zeta$trace, type = "l") # trace plot

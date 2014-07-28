@@ -20,7 +20,7 @@ Function with first argument \code{zeta} which returns a list of the (unnormaliz
 Vector of length m for a single response pattern, or matrix of size s by m of a set of s item response patterns. In the latter case the posterior is computed by conditioning on the event that the response pattern is one of the s response patterns. Elements of \code{y} should be integers from 0 to r-1 where r is the number of response categories.
 }
 \item{zeta}{
-Vector or values of the latent trait at which to compute the log-posterior density. By default this is a sequence of \code{length} values from \code{zmin} to \code{zmax}.
+Vector of values of the latent trait at which to compute the log-posterior density. By default this is a sequence of \code{length} values from \code{zmin} to \code{zmax}.
 }
 \item{zmin}{
 Minimum value of the latent trait at which to compute the log-posterior density.
@@ -41,11 +41,6 @@ The primary purpose of this function is in preparing data for plotting the profi
 \value{
 \item{zeta }{Returns the argument \code{zeta}.}
 \item{post }{The log-posterior density at each each value of \code{zeta}.}
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
 }
 \author{
 Timothy R. Johnson
@@ -57,11 +52,17 @@ Note that the posterior is the unnormalized posterior distribution. The normaliz
 See \code{\link{postsamp}} for simulating realizations from the posterior distribution to use to estimate the normalized posterior density.
 }
 \examples{
-# profile of the log-posterior of a partial credit model
-tmp <- posttrace(fmodelpcm, c(0,1,2,1,0), bpar = matrix(0, 5, 2))
-plot(tmp$zeta, tmp$post, type = "l")
+alph <- c(1.27,1.34,1.14,1,0.67)   # discrimination parameters
+beta <- c(1.19,0.59,0.15,-0.59,-2) # difficulty parameters
+gamm <- c(0.1,0.15,0.15,0.2,0.01)  # lower asymptote parameters
+
+# profile of log-likelihood distribution given a sum score of 3
+tmp <- posttrace(fmodel3pl, patterns(5, 2, 3), apar = alph, bpar = beta, cpar = gamm,
+	prior = function(z) 1)
+with(tmp, plot(zeta, post, type = "l"))
+
+# profile of log-posterior distribution (normal prior) given a sum score of 3
+tmp <- posttrace(fmodel3pl, patterns(5, 2, 3), apar = alph, bpar = beta, cpar = gamm)
+with(tmp, plot(zeta, post, type = "l"))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+

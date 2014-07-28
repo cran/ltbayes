@@ -3,13 +3,13 @@ information <- function(fmodel, y, zeta, observed = FALSE, ...) {
 	if (is.vector(y)) y <- matrix(y, 1, length(y))
 	if (observed) {
 		if (!missing(zeta)) warning("Observed information computed at MLE only; zeta argument ignored.")
-		zeta.mode <- postmode(fmodel, y, prior = function(z) return(1), ...)$mode
+		zeta.mode <- postmode(fmodel, y, prior = function(z) return(1), ...)$zeta
 		inf <- -numDeriv::hessian(function(z, ...) fmodel(z, ...)$post, zeta.mode, y = y,
 			prior = function(z) return(1), ...)
 		return(list(test = inf))
 	}
 	else {
-		if (missing(zeta)) zeta <- postmode(fmodel, y, prior = function(z) return(1), ...)$mode
+		if (missing(zeta)) zeta <- postmode(fmodel, y, prior = function(z) return(1), ...)$zeta
 		if (nrow(y) > 1) stop("Fisher information only available for single response patterns.")
 		p <- fmodel(zeta, y, ...)$prob
 		m <- nrow(p)

@@ -40,7 +40,7 @@ This function solves for the profile likelihood confidence interval using a root
 }
 \value{
 \item{zeta }{Maximum likelihood estimate of the latent trait.}
-\item{lmax }{Value of the log-likelihood function at the maximum likelihood estimate of the latent trait.}
+\item{post }{Value of the log-likelihood function at the maximum likelihood estimate of the latent trait.}
 \item{lower }{Lower bound of the confidence interval.}
 \item{f.lower }{Value of the log-likelihood function at \code{lower}.}
 \item{upper }{Upper bound of the confidence interval.}
@@ -57,7 +57,10 @@ Finding the confidence interval is not guaranteed. Inspection of the profile of 
 See \code{\link{uniroot}} for details on the root-finding function, and \code{\link{postsamp}} for the function that finds the MLE. 
 }
 \examples{
-# profile likelihood confidence interval from a partial credit model
-profileci(fmodelpcm, c(0,1,2,1,0), bpar = matrix(0, 5, 2))
-}
+alph <- c(1.27,1.34,1.14,1,0.67)   # discrimination parameters
+beta <- c(1.19,0.59,0.15,-0.59,-2) # difficulty parameters
+gamm <- c(0.1,0.15,0.15,0.2,0.01)  # lower asymptote parameters
 
+# profile confidence interval given a sum score of 3
+profileci(fmodel3pl, patterns(5, 2, 3), apar = alph, bpar = beta, cpar = gamm)
+}

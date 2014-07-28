@@ -33,7 +33,7 @@ This is basically wrapper for \code{\link{optimize}} to find the maximum of a lo
 }
 \value{
 \item{zeta }{The value of \eqn{\zeta} that maximizes the posterior distribution.}
-\item{lmax }{The value of the posterior distribution at the mode.}
+\item{post }{The value of the log-posterior distribution at the mode.}
 }
 \author{
 Timothy R. Johnson
@@ -45,10 +45,14 @@ Finding the mode is not guaranteed. Inspection of the profile of the posterior (
 See \code{\link{optimize}} for information on using this function.
 }
 \examples{
-# posterior mode for a partial credit model
-postmode(fmodelpcm, c(0, 1, 2, 1, 0), bpar = matrix(0, 5, 2))
+alph <- c(1.27,1.34,1.14,1,0.67)   # discrimination parameters
+beta <- c(1.19,0.59,0.15,-0.59,-2) # difficulty parameters
+gamm <- c(0.1,0.15,0.15,0.2,0.01)  # lower asymptote parameters
+
+# MAP estimate given a sum score of 3
+postmode(fmodel3pl, patterns(5, 2, 3), apar = alph, bpar = beta, cpar = gamm)
+
+# MLE given a sum score of 3
+postmode(fmodel3pl, patterns(5, 2, 3), apar = alph, bpar = beta, cpar = gamm,
+	prior = function(z) 1)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
