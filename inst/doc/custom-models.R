@@ -14,7 +14,7 @@ custom3pl <- function(zeta, y, alph, beta, gamm, prior = dnorm, ...) {
 		+ log(prior(zeta, ...)), prob = prob))
 }
 
-## ----, eval = FALSE------------------------------------------------------
+## ---- eval = FALSE-------------------------------------------------------
 #  custom3pl <- function(zeta, y, alph, beta, prior = dnorm, ...) {
 #  	prob <- gamm + (1 - gamm) * plogis(alph * (zeta - beta))
 #  	yprb <- prob^y * (1 - prb)^(1 - y)
@@ -22,7 +22,7 @@ custom3pl <- function(zeta, y, alph, beta, gamm, prior = dnorm, ...) {
 #  		+ log(prior(zeta, ...)), prob = prob))
 #  }	
 
-## ----, echo = FALSE, message = FALSE-------------------------------------
+## ---- echo = FALSE, message = FALSE--------------------------------------
 library(ltbayes) 
 
 ## ----fmodel3pldemo-------------------------------------------------------
@@ -46,7 +46,7 @@ zeta.custom3pl <- data.frame(sample = 1:samp,
 	zeta = zeta.custom3pl$batch[(burn + 1):(samp + burn)])
 head(zeta.custom3pl)
 
-## ----, gpc---------------------------------------------------------------
+## ---- gpc----------------------------------------------------------------
 fmodelgpc <- function(zeta, y, apar, bpar, prior = dnorm, ...) {
 	if (is.vector(y)) y <- matrix(y, 1, length(y))
 	m <- ncol(y)

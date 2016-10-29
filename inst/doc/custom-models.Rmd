@@ -11,7 +11,7 @@ The **ltbayes** package includes functions for the posterior distribution of the
 
 The functions included with **ltbayes** use Fortran 90/95 subroutines for computationally efficiency, but here for illustration we will consider an alternative to `fmodel3pl` (the three-parameter logistic binary item response model) using only R. Recall that this model is 
 $$
-	P(Y_{ij} = y|\zeta_i,\alpha_j,\beta_j,\gamma_j) = \gamma_j + \frac{(1-\gamma_j)\exp[y\alpha_j(\zeta_i - \beta_j)]}{1 + \exp[\alpha_j(\zeta_i - \beta_j)]},
+	P(Y_{j} = y|\zeta,\alpha_j,\beta_j,\gamma_j) = \gamma_j + \frac{(1-\gamma_j)\exp[y\alpha_j(\zeta - \beta_j)]}{1 + \exp[\alpha_j(\zeta - \beta_j)]},
 $$
 for $y = 0,1$. To implement this model a R function is necessary that it accept as arguments $\zeta$, one or more response patterns, the item parameters ($\alpha_j$, $\beta_j$, $\gamma_j$), and also allows specification of a prior distribution for $\zeta$. This R function could be specified as follows.
 ```{r custom3pl}
@@ -39,7 +39,7 @@ custom3pl <- function(zeta, y, alph, beta, prior = dnorm, ...) {
 		+ log(prior(zeta, ...)), prob = prob))
 }	
 ```
-Now we can test \texttt{custom3pl} against \texttt{fmodel3pl}.
+Now we can test `custom3pl` against `fmodel3pl`.
 ```{r, echo = FALSE, message = FALSE}
 library(ltbayes) 
 ```

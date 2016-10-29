@@ -5,6 +5,18 @@
 
 <title>User-Defined Models</title>
 
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
 <!-- Styles for R syntax highlighter -->
 <style type="text/css">
    pre .operator,
@@ -46,7 +58,7 @@ hljs.initHighlightingOnLoad();
 </script>
 
 <!-- MathJax scripts -->
-<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
 
@@ -99,7 +111,9 @@ a:visited {
 pre, img {
   max-width: 100%;
 }
-
+pre {
+  overflow-x: auto;
+}
 pre code {
    display: block; padding: 0.5em;
 }
@@ -203,7 +217,7 @@ hr {
 
 <p>The functions included with <strong>ltbayes</strong> use Fortran 90/95 subroutines for computationally efficiency, but here for illustration we will consider an alternative to <code>fmodel3pl</code> (the three-parameter logistic binary item response model) using only R. Recall that this model is 
 \[
-    P(Y_{ij} = y|\zeta_i,\alpha_j,\beta_j,\gamma_j) = \gamma_j + \frac{(1-\gamma_j)\exp[y\alpha_j(\zeta_i - \beta_j)]}{1 + \exp[\alpha_j(\zeta_i - \beta_j)]},
+    P(Y_{j} = y|\zeta,\alpha_j,\beta_j,\gamma_j) = \gamma_j + \frac{(1-\gamma_j)\exp[y\alpha_j(\zeta - \beta_j)]}{1 + \exp[\alpha_j(\zeta - \beta_j)]},
 \]
 for \(y = 0,1\). To implement this model a R function is necessary that it accept as arguments \(\zeta\), one or more response patterns, the item parameters (\(\alpha_j\), \(\beta_j\), \(\gamma_j\)), and also allows specification of a prior distribution for \(\zeta\). This R function could be specified as follows.</p>
 
@@ -233,7 +247,7 @@ for \(y = 0,1\). To implement this model a R function is necessary that it accep
 }   
 </code></pre>
 
-<p>Now we can test \texttt{custom3pl} against \texttt{fmodel3pl}.</p>
+<p>Now we can test <code>custom3pl</code> against <code>fmodel3pl</code>.</p>
 
 <pre><code class="r">samp &lt;- 5000 # number of sampled realizations from posterior distribution
 burn &lt;- 1000 # number of discarded burn-in samples
@@ -249,13 +263,13 @@ zeta.fmodel3pl &lt;- data.frame(sample = 1:samp,
 head(zeta.fmodel3pl)
 </code></pre>
 
-<pre><code>##   sample    zeta
-## 1      1 0.33414
-## 2      2 0.33414
-## 3      3 0.33414
-## 4      4 1.43927
-## 5      5 1.43927
-## 6      6 0.07753
+<pre><code>##   sample       zeta
+## 1      1 0.33414150
+## 2      2 0.33414150
+## 3      3 0.33414150
+## 4      4 1.43927349
+## 5      5 1.43927349
+## 6      6 0.07753229
 </code></pre>
 
 <pre><code class="r">set.seed(123)
@@ -267,13 +281,13 @@ zeta.custom3pl &lt;- data.frame(sample = 1:samp,
 head(zeta.custom3pl)
 </code></pre>
 
-<pre><code>##   sample    zeta
-## 1      1 0.33414
-## 2      2 0.33414
-## 3      3 0.33414
-## 4      4 1.43927
-## 5      5 1.43927
-## 6      6 0.07753
+<pre><code>##   sample       zeta
+## 1      1 0.33414150
+## 2      2 0.33414150
+## 3      3 0.33414150
+## 4      4 1.43927349
+## 5      5 1.43927349
+## 6      6 0.07753229
 </code></pre>
 
 <p>Note that both functions produce the same results. </p>
@@ -315,13 +329,13 @@ zeta.fmodelpcm &lt;- data.frame(sample = 1:samp,
 head(zeta.fmodelpcm)
 </code></pre>
 
-<pre><code>##   sample     zeta
-## 1      1  0.07125
-## 2      2 -0.07860
-## 3      3 -0.07860
-## 4      4 -0.07860
-## 5      5 -0.39706
-## 6      6  0.16018
+<pre><code>##   sample        zeta
+## 1      1  0.07124883
+## 2      2 -0.07860360
+## 3      3 -0.07860360
+## 4      4 -0.07860360
+## 5      5 -0.39706194
+## 6      6  0.16018381
 </code></pre>
 
 <pre><code class="r">set.seed(123)
@@ -332,13 +346,13 @@ zeta.fmodelgpc &lt;- data.frame(sample = 1:samp,
 head(zeta.fmodelgpc)
 </code></pre>
 
-<pre><code>##   sample     zeta
-## 1      1  0.07125
-## 2      2 -0.07860
-## 3      3 -0.07860
-## 4      4 -0.07860
-## 5      5 -0.39706
-## 6      6  0.16018
+<pre><code>##   sample        zeta
+## 1      1  0.07124883
+## 2      2 -0.07860360
+## 3      3 -0.07860360
+## 4      4 -0.07860360
+## 5      5 -0.39706194
+## 6      6  0.16018381
 </code></pre>
 
 <p>As expected, both functions give the same results, but <code>fmodelgpc</code> could be used for cases where the items do not have equal discrimination parameters.</p>

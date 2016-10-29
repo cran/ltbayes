@@ -3,9 +3,11 @@
 %\VignetteIndexEntry{Plots from Johnson & Kuhn (2014)}
 -->
 
+# Plots from Johnson & Kuhn (2014)
+
 This document (nearly) duplicates the examples from Johnson and Kuhn (2014). Minor differences are due to the use of R Markdown. 
 
-# Necessary Packages
+## Necessary Packages
 
 ```{r libraries, message = FALSE}
 library(ltbayes)
@@ -14,7 +16,7 @@ library(gridExtra)
 library(reshape2)
 ```
 
-# Figure 1
+## Figure 1
 
 Trace plot (a) and estimated posterior density (b) for $\zeta$ based on 5000 simulated realizations from the posterior distribution.
 
@@ -56,7 +58,7 @@ p2 <- p
 grid.arrange(p1, p2, nrow = 1)
 ```
 
-# Figure 2
+## Figure 2
 
 Violin plots for 5000 simulated realizations from the posterior distribution of $\zeta$ given each of 32 possible response patterns, stratified by sum score. Points and line segments within each violin plot represent the posterior mean and 95% credibility interval, respectively.
 
@@ -87,7 +89,7 @@ p <- p + stat_summary(fun.y = mean,
 plot(p)
 ```
 
-# Figure 3
+## Figure 3
 
 Violin plots (a) and empirical cumulative distribution functions (b) for 5000 simulated realizations from the posterior distribution of $\zeta$ conditional on sum score. Points and line segments within each violin plot represent the posterior mean and 95% credibility interval, respectively.
 
@@ -130,7 +132,7 @@ p2 <- p
 grid.arrange(p2, p1, nrow = 1)
 ```
 
-# Figure 4
+## Figure 4
 
 Estimated density functions and empirical cumulative distribution functions for the posterior distributions of $\zeta$ given $\tilde{Y} < \tilde{y}$ (lower interval) versus $\tilde{Y} \ge \tilde{y}$ (upper interval) for $c = 1, 2, \dots, 5$.
 
@@ -156,9 +158,9 @@ zetau$cut <- rep(c("y1","y2","y3","y4","y5"), each = samp)
 zeta <- rbind(zetal, zetau)
 
 p <- ggplot(zeta, aes(x = zeta)) + geom_density(aes(linetype = interval), 
-	adjust = 2, show_guide = FALSE)
+	adjust = 2, show.legend = FALSE)
 p <- p + facet_wrap(~ cut, ncol = 5) + xlim(c(-4,4)) + ylab("") + xlab(expression(zeta))
-p <- p + geom_hline(yintercept = 0) + stat_ecdf(aes(linetype = interval))
+p <- p + stat_ecdf(aes(linetype = interval))
 p <- p + theme_bw() + theme(legend.key = element_blank())
 p <- p + theme(text = element_text(size = 15))
 p <- p + theme(axis.text.x = element_text(size = 10, color = "black"))
@@ -168,7 +170,7 @@ p <- p + scale_linetype_manual(values = c(6,1), name = "Interval")
 plot(p)
 ```
 
-# Figure 5
+## Figure 5
 
 Posterior probabilities, conditional on sum score ($\tilde{y}$), of $\zeta$ falling into one of four consecutive intervals defined as $R_1 = \{\zeta | \zeta < Q_1\}$, $R_2 = \{\zeta|Q_1 < \zeta < Q_2\}$, $R_3 = \{\zeta|Q_2 < \zeta < Q_3\}$, and $R_4 = \{\zeta|\zeta > Q_4\}$ where $Q_1$, $Q_2$, and $Q_3$ are the quartiles of the prior distribution of $\zeta$.
 
@@ -202,7 +204,7 @@ p <- p + ylab("") + xlab("Sum")
 plot(p)
 ```
 
-# Figure 6
+## Figure 6
 
 Posterior probabilities of the form $P(\zeta_A > \zeta_B|\tilde{Y}_A = \tilde{y}_A, \tilde{Y}_B = \tilde{y}_B)$ --- i.e., the posterior probability that examinee A has a larger latent score than examinee B given their sum scores.
 
@@ -247,7 +249,7 @@ p <- p + ylab("Examinee A Sum") + xlab("Examinee B Sum")
 plot(p)
 ```
 
-# Figure 7
+## Figure 7
 
 Profiles of the unnormalized log-posterior distribution of $\zeta$ given $\tilde{Y} = 0, 1, \dots, 5$ with normal and improper uniform prior distributions.
 
@@ -295,7 +297,7 @@ p <- p + theme(axis.text.y = element_text(color = "black"))
 plot(p)
 ```
 
-# Figure 8
+## Figure 8
 
 Profile likelihoods for $\zeta$ given $\tilde{Y} = 2,3,4$ with maximum likelihood estimates and profile likelihood confidence intervals.
 
@@ -339,7 +341,7 @@ p <- p + annotate("segment", x = y4$upper, xend = y4$upper,
 plot(p)
 ```
 
-# Figure 9 
+## Figure 9 
 
 Item information functions for five items of a 3-parameter binary logistic model.
 
@@ -355,7 +357,7 @@ matplot(zeta, info, type = "l", ylab = "Information", bty = "n", xlab = expressi
 legend(-3, 0.3, paste("Item", 1:5), lty = 1:5, col = 1:5)
 ```
 
-# Figure 11
+## Figure 11
 
 Posterior distribution of $\zeta$ for the hyperbolic cosine model given $\tilde{y} = 1$ (a), $y' = (1,0,0,0,0)$ (b), $y' = (1,1,1,0,0)$ (c), and $y' = (0,1,1,1,0)$ (d).
 
@@ -409,7 +411,7 @@ p <- p + xlab(expression(zeta)) + ylab("Posterior Density")
 plot(p)
 ```
 
-# Figure 12
+## Figure 12
 
 Item and test Fisher information functions for five items of a hyperbolic cosine model.
 
@@ -434,8 +436,8 @@ p <- p + theme(axis.text = element_text(size = 15))
 plot(p)
 ```
 
-# References
+## References
 
-Johnson, T. R. & Kuhn, K. M. (2014). *Simulation-Based Bayesian Inference for Latent Traits of Item Response Models: Introduction to the* **ltbayes** *Package for R*. Unpublished manuscript. 
+Johnson, T. R. & Kuhn, K. M. (2015). Simulation-Based Bayesian Inference for Latent Traits of Item Response Models: Introduction to the **ltbayes** Package for R. *Behavior Research Methods*, *47*, 1309--1327.
 
 

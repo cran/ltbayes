@@ -1,5 +1,5 @@
-076f24056865c6b83018f24a1c4e7ff2 *DESCRIPTION
-5c4534ed2c897d8d1bfd45b77bfb9171 *NAMESPACE
+9a8c379d88c1d20330d5b2bba45ac5de *DESCRIPTION
+10e36df95014505f0bb7d8fe7fed1e0e *NAMESPACE
 709d2fc5c00046c5d3bc4d1e1eacffb2 *R/fmodel1pl.R
 45ec742341d84f3a262366f6b20b540d *R/fmodel1pp.R
 e8f461ee2ad749832395d1dc7dcc8b26 *R/fmodel2pl.R
@@ -20,13 +20,13 @@ c15337f830ce18dc72859830b9865469 *R/information.R
 ec847fcc549518c429fc4171a44bddb5 *R/postsamp.R
 c04141fd79046c1caa86ac0d6fcfad09 *R/posttrace.R
 b768ff1ded3edd7ff879409771bbfe3c *R/profileci.R
-335ae88f0c72be5df28f8c3898e48195 *build/vignette.rds
-3f4269c6e0610371eb78f008151fac3a *inst/doc/custom-models.R
-a88cef0880cb5e024724e07f430eab5f *inst/doc/custom-models.Rmd
-251d5b3c99c49331606d30481c61b56e *inst/doc/custom-models.html
-392103479df0b6192e6a7d1dc9a4fdd5 *inst/doc/example-plots.R
-755cbb08eab0e4b49d880f6500c4c552 *inst/doc/example-plots.Rmd
-f49616c2fd5c822cbe92156e11dda6c1 *inst/doc/example-plots.html
+7e5032636c574ad06d3eeb5732e7fd7a *build/vignette.rds
+c67a248e089c5ad716c7006c6f6764b3 *inst/doc/custom-models.R
+d79d2c5fd66c307a5b86574e42648679 *inst/doc/custom-models.Rmd
+062302f67775994098403c1b6cf34f27 *inst/doc/custom-models.html
+56edd3de935b6ba00b10cbc42a9be2aa *inst/doc/example-plots.R
+9eb98dbcf299ff3c4e465df6da571884 *inst/doc/example-plots.Rmd
+c9415f81e861954afe072c2ab721e203 *inst/doc/example-plots.html
 ca17cc83c55949e6b6b250f98a6b8e43 *man/fmodel1pl.Rd
 5a216b1185710f8ecef6e93baf4e1148 *man/fmodel1pp.Rd
 fd8ebbe3892864edf446636ae389cae3 *man/fmodel2pl.Rd
@@ -55,5 +55,5 @@ ccc201fa39ff2cbb3e7ebf4eaa8bf2af *src/fmodelnrm.f90
 3959b01eedc65e0cb03ee61391a2bc98 *src/fmodelpcm.f90
 f2e7b41430dab7944e1ad1a630444dff *src/fmodelrsm.f90
 b61875182c6b1528a294b35d27891382 *src/fmodelseq.f90
-a88cef0880cb5e024724e07f430eab5f *vignettes/custom-models.Rmd
-755cbb08eab0e4b49d880f6500c4c552 *vignettes/example-plots.Rmd
+d79d2c5fd66c307a5b86574e42648679 *vignettes/custom-models.Rmd
+9eb98dbcf299ff3c4e465df6da571884 *vignettes/example-plots.Rmd

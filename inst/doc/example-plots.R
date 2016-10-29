@@ -127,9 +127,9 @@ zetau$cut <- rep(c("y1","y2","y3","y4","y5"), each = samp)
 zeta <- rbind(zetal, zetau)
 
 p <- ggplot(zeta, aes(x = zeta)) + geom_density(aes(linetype = interval), 
-	adjust = 2, show_guide = FALSE)
+	adjust = 2, show.legend = FALSE)
 p <- p + facet_wrap(~ cut, ncol = 5) + xlim(c(-4,4)) + ylab("") + xlab(expression(zeta))
-p <- p + geom_hline(yintercept = 0) + stat_ecdf(aes(linetype = interval))
+p <- p + stat_ecdf(aes(linetype = interval))
 p <- p + theme_bw() + theme(legend.key = element_blank())
 p <- p + theme(text = element_text(size = 15))
 p <- p + theme(axis.text.x = element_text(size = 10, color = "black"))

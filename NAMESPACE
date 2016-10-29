@@ -1,5 +1,6 @@
 useDynLib(ltbayes)
 import(mcmc,MHadaptive,numDeriv)
+importFrom("stats", "dnorm", "optimize", "qchisq", "uniroot")
 export(fmodel1pl,fmodel2pl,fmodel3pl,fmodel4pl,
 	fmodel1pp,fmodel2pp,fmodel3pp,fmodel4pp,
 	fmodelgrl,fmodelgrp,
